@@ -1,1 +1,10 @@
 check status code - 500 currently for error
+
+long response in TTM_friend - fix it
+
+
+langchain has RAG system using gemini pro
+chain of thought system
+
+
+question language should be same as answer language
