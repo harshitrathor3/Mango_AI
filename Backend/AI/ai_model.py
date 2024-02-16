@@ -1,5 +1,6 @@
 import google.generativeai as genai
 from AI.constants import GOOGLE_API_KEY
+# from constants import GOOGLE_API_KEY
 
 
 genai.configure(api_key=GOOGLE_API_KEY)
@@ -24,3 +25,10 @@ chat_history = []
 
 # res = chat_model(prompt, chat_history)
 # print(res)
+
+
+# for i in range(10):
+#     print('i : ', i)
+#     res, hist = chat_model(input(), chat_history)
+#     print('res : ', res)
+#     print('history : ', chat_history)

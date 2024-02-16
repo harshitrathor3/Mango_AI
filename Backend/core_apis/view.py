@@ -4,8 +4,8 @@ from core_apis.payloads import *
 
 import json
 
-from AI.ai_model import chat_model
-from core_apis.control import QNA
+from core_apis.control import QNA, ttm_friend
+
 
 
 api = Api()
@@ -48,8 +48,10 @@ class TTMfriend(Resource):
             user_id = json_data['user_id']
             question = json_data['question']
             chat_history = json_data['chat_history']
+            name = json_data['name']
+            age = json_data['age']
             
-            answer = 'this is my answer'
+            answer, chat_history = ttm_friend(user_id, question, chat_history, name, age)
 
             data = {'answer': answer, 'chat_history': chat_history, 'user_id': user_id}
             return data, 200
@@ -59,7 +61,7 @@ class TTMfriend(Resource):
         
 
 
-@mangons.route('/qna_ai')
+@mangons.route('/qna')
 class QueNanS(Resource):
     # @api.expect(qna_ai, validate=True)
     def post(self):
