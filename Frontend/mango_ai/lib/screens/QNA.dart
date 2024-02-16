@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import '../models/messege.dart';
+import '../apis.dart';
 
 class QNAScreen extends StatefulWidget {
   final String? token;
@@ -11,7 +12,7 @@ class QNAScreen extends StatefulWidget {
 }
 
 class _QNAScreenState extends State<QNAScreen> {
-  bool _inputactive = false;
+  final ScrollController _scrollController = ScrollController();
   final SpeechToText _speechToText = SpeechToText();
 
   bool _speechEnabled = false;
@@ -31,15 +32,9 @@ class _QNAScreenState extends State<QNAScreen> {
 
   void _startListening() async {
     await _speechToText.listen(
-      onResult: _onSpeechResult,
-      listenOptions: SpeechListenOptions(
-          listenMode: ListenMode.dictation, partialResults: false),
-      onSoundLevelChange: (level) {
-        // if (level == 0) {
-        // }
-        print(level);
-      },
-    );
+        onResult: _onSpeechResult,
+        listenOptions: SpeechListenOptions(
+            partialResults: true, listenMode: ListenMode.dictation));
     setState(() {
       _confidenceLevel = 0;
     });
@@ -50,10 +45,16 @@ class _QNAScreenState extends State<QNAScreen> {
     setState(() {});
   }
 
-  void _onSpeechResult(result) {
-    setState(() {
-      _wordsSpoken = "${result.recognizedWords}";
+  void _onSpeechResult(result) async {
+    _wordsSpoken = "${result.recognizedWords}";
+    if (_speechToText.isListening == false) {
       chatlist.add(Messege(content: _wordsSpoken, isAi: false));
+      // final answer=await
+      final String answer = await qna(_wordsSpoken);
+      chatlist.add(Messege(content: answer, isAi: true));
+      _wordsSpoken = "";
+    }
+    setState(() {
       _confidenceLevel = result.confidence;
     });
   }
@@ -64,6 +65,13 @@ class _QNAScreenState extends State<QNAScreen> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.fastOutSlowIn);
+      }
+    });
     var size = MediaQuery.of(context).size;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -97,8 +105,12 @@ class _QNAScreenState extends State<QNAScreen> {
         //     ],
         //   ),
         // ),
+        // Expanded(
+        //   child: Placeholder(),
+        // ),
         Expanded(
           child: ListView.builder(
+            controller: _scrollController,
             itemCount: chatlist.length,
             shrinkWrap: true,
             padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -129,63 +141,40 @@ class _QNAScreenState extends State<QNAScreen> {
             },
           ),
         ),
-        Container(
-          height: 40,
-          width: size.width,
-          child: ListView(scrollDirection: Axis.horizontal, children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(onPressed: () {}, child: Text("data")),
-            ),
-            ElevatedButton(onPressed: () {}, child: Text("data")),
-            ElevatedButton(onPressed: () {}, child: Text("data")),
-            ElevatedButton(onPressed: () {}, child: Text("data")),
-            ElevatedButton(onPressed: () {}, child: Text("data")),
-            ElevatedButton(onPressed: () {}, child: Text("data"))
-          ]),
-        ),
-        Container(
-          height: 70,
-          child: _inputactive
-              ? SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.8,
-                          child: TextFormField(),
-                        ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.send_rounded,
-                              size: 24,
-                              color: Colors.black,
-                            ))
-                      ],
-                    ),
-                  ))
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: ElevatedButton(
-                      onPressed: _speechToText.isListening
-                          ? _stopListening
-                          : _startListening,
-                      // tooltip: 'Listen',
-                      child: Icon(
-                        _speechToText.isNotListening
-                            ? Icons.mic_off
-                            : Icons.mic,
-                        color: Colors.amber,
-                      ),
-                    ),
+        chatlist.length == 1
+            ? Container(
+                height: 40,
+                width: size.width,
+                child: ListView(scrollDirection: Axis.horizontal, children: [
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                ]),
+              )
+            : _speechToText.isListening
+                ? Text(_wordsSpoken)
+                : const SizedBox(
+                    height: 0,
                   ),
-                ),
-        )
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: ElevatedButton(
+              onPressed:
+                  _speechToText.isListening ? _stopListening : _startListening,
+              // tooltip: 'Listen',
+              child: Icon(
+                _speechToText.isNotListening ? Icons.mic_off : Icons.mic,
+                color: Colors.amber,
+              ),
+              // backgroundColor: Colors.red,
+            ),
+          ),
+        ),
       ],
     );
   }
