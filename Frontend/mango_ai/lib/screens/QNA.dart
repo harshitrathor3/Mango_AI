@@ -13,12 +13,31 @@ class _QNAScreenState extends State<QNAScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(child: Placeholder()),
-        AnimatedContainer(
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeIn,
-          height: 80,
+        Expanded(
+          child: ListView(
+            reverse: true,
+            children: [Text("data")],
+          ),
+        ),
+        Container(
+          height: 40,
+          width: size.width,
+          child: ListView(scrollDirection: Axis.horizontal, children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(onPressed: () {}, child: Text("data")),
+            ),
+            ElevatedButton(onPressed: () {}, child: Text("data")),
+            ElevatedButton(onPressed: () {}, child: Text("data")),
+            ElevatedButton(onPressed: () {}, child: Text("data")),
+            ElevatedButton(onPressed: () {}, child: Text("data")),
+            ElevatedButton(onPressed: () {}, child: Text("data"))
+          ]),
+        ),
+        Container(
+          height: 70,
           child: _inputactive
               ? SizedBox(
                   width: MediaQuery.of(context).size.width,
@@ -41,14 +60,16 @@ class _QNAScreenState extends State<QNAScreen> {
                       ],
                     ),
                   ))
-              : Center(
-                  child: IconButton(
-                      onPressed: () {
-                        // setState(() {
-                        //   _inputactive = true;
-                        // });
-                      },
-                      icon: Icon(Icons.voice_chat)),
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: ElevatedButton(
+                        onPressed: () {},
+                        child: Icon(
+                          Icons.mic,
+                          size: 30,
+                        )),
+                  ),
                 ),
         )
       ],

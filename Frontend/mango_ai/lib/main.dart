@@ -82,7 +82,7 @@ class _ExampleState extends State<Example> {
               duration: Duration(milliseconds: 400),
               tabBackgroundColor: Colors.amber,
               color: Colors.yellow,
-              tabs: [
+              tabs: const [
                 GButton(
                   icon: Icons.record_voice_over_rounded,
                   text: 'Talk',
