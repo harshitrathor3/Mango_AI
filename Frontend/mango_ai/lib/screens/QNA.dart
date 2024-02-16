@@ -12,6 +12,7 @@ class QNAScreen extends StatefulWidget {
 
 class _QNAScreenState extends State<QNAScreen> {
   bool _inputactive = false;
+  final ScrollController _scrollController = ScrollController();
   final SpeechToText _speechToText = SpeechToText();
 
   bool _speechEnabled = false;
@@ -64,6 +65,13 @@ class _QNAScreenState extends State<QNAScreen> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.fastOutSlowIn);
+      }
+    });
     var size = MediaQuery.of(context).size;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -99,6 +107,7 @@ class _QNAScreenState extends State<QNAScreen> {
         // ),
         Expanded(
           child: ListView.builder(
+            controller: _scrollController,
             itemCount: chatlist.length,
             shrinkWrap: true,
             padding: EdgeInsets.only(top: 10, bottom: 10),
