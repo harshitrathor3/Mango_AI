@@ -1,19 +1,33 @@
 from flask import Flask
+from flask_restx import Api
+from flask_cors import CORS
+from core_apis.view import api
 
 
-app = Flask(__name__)
 
 
 
-@app.route('/')
-def home():
-    return 'server running', 200
+def create_app(api):
+    app = Flask(__name__)
+    CORS(app)
 
 
-@app.route('/route')
-def route():
-    return 'url running'
+    from core_apis.view import mango_ai
+    app.register_blueprint(mango_ai)
+
+    api.init_app(app)
+
+    from core_apis.view import mangons
+    api.add_namespace(mangons)
+
+    return app
+
+
+
+
+
+app = create_app(api)
 
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run("0.0.0.0", port=5003, debug=True, use_reloader=True)
