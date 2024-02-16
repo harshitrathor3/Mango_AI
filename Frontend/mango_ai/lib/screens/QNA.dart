@@ -31,17 +31,10 @@ class _QNAScreenState extends State<QNAScreen> {
   }
 
   void _startListening() async {
-    await _speechToText.listen(
-      onResult: _onSpeechResult,
-      listenOptions: SpeechListenOptions(
-          listenMode: ListenMode.dictation, partialResults: false),
-      onSoundLevelChange: (level) {
-        // if (level == 0) {
-        // }
-        print(level);
-      },
-    );
-    setState(() {
+    setState(() async {
+      await _speechToText.listen(
+          onResult: _onSpeechResult,
+          listenOptions: SpeechListenOptions(listenMode: ListenMode.dictation));
       _confidenceLevel = 0;
     });
   }
@@ -54,8 +47,10 @@ class _QNAScreenState extends State<QNAScreen> {
   void _onSpeechResult(result) {
     setState(() {
       _wordsSpoken = "${result.recognizedWords}";
-      chatlist.add(Messege(content: _wordsSpoken, isAi: false));
       _confidenceLevel = result.confidence;
+      if (_speechToText.isListening == false && _wordsSpoken.isNotEmpty) {
+        chatlist.add(Messege(content: _wordsSpoken, isAi: false));
+      }
     });
   }
 
@@ -105,6 +100,9 @@ class _QNAScreenState extends State<QNAScreen> {
         //     ],
         //   ),
         // ),
+        // Expanded(
+        //   child: Placeholder(),
+        // ),
         Expanded(
           child: ListView.builder(
             controller: _scrollController,
@@ -138,27 +136,31 @@ class _QNAScreenState extends State<QNAScreen> {
             },
           ),
         ),
-        Container(
-          height: 40,
-          width: size.width,
-          child: ListView(scrollDirection: Axis.horizontal, children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(onPressed: () {}, child: Text("data")),
-            ),
-            ElevatedButton(onPressed: () {}, child: Text("data")),
-            ElevatedButton(onPressed: () {}, child: Text("data")),
-            ElevatedButton(onPressed: () {}, child: Text("data")),
-            ElevatedButton(onPressed: () {}, child: Text("data")),
-            ElevatedButton(onPressed: () {}, child: Text("data"))
-          ]),
-        ),
-        Container(
+        chatlist.length == 1
+            ? Container(
+                height: 40,
+                width: size.width,
+                child: ListView(scrollDirection: Axis.horizontal, children: [
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
+                ]),
+              )
+            : _speechToText.isListening
+                ? Text(_wordsSpoken)
+                : const SizedBox(
+                    height: 0,
+                  ),
+        SizedBox(
           height: 70,
           child: _inputactive
               ? SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -169,7 +171,7 @@ class _QNAScreenState extends State<QNAScreen> {
                         ),
                         IconButton(
                             onPressed: () {},
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.send_rounded,
                               size: 24,
                               color: Colors.black,
@@ -186,9 +188,7 @@ class _QNAScreenState extends State<QNAScreen> {
                           : _startListening,
                       // tooltip: 'Listen',
                       child: Icon(
-                        _speechToText.isNotListening
-                            ? Icons.mic_off
-                            : Icons.mic,
+                        _speechToText.isListening ? Icons.mic : Icons.mic_off,
                         color: Colors.amber,
                       ),
                     ),
