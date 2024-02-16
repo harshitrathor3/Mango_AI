@@ -38,6 +38,9 @@ dependencies:
   google_nav_bar: ^5.0.6
   speech_to_text: ^6.6.0
   http: ^1.2.0
+  firebase_auth: ^4.17.4
+  google_sign_in: ^6.2.1
+  firebase_core: ^2.25.4
 
 dev_dependencies:
   flutter_test:
