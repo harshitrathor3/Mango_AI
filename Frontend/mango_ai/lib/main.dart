@@ -6,7 +6,7 @@ void main() => runApp(MaterialApp(
     builder: (context, child) {
       return Directionality(textDirection: TextDirection.ltr, child: child!);
     },
-    title: 'GNav',
+    title: 'MangoAI',
     theme: ThemeData(
       primaryColor: Colors.yellowAccent,
     ),
@@ -36,7 +36,7 @@ class _ExampleState extends State<Example> {
       'Likes',
       style: optionStyle,
     ),
-    QNAScreen(),
+    QNAScreen(token: null),
     Text(
       'Profile',
       style: optionStyle,
