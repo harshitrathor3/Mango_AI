@@ -21,33 +21,25 @@ main_model = api.model('MainModel', {
 })
 
 
-
-
-@mangons.route('/my_route')
-class MyRoute(Resource):
-    @api.expect(my_route, validate=True)
+@mangons.route('/server_test')
+class ServerTest(Resource):
+    @api.expect(server_test, validate=True)
     def get(self):
         try:
-            args = my_route.parse_args()
-            a = args['arg1']
-            b = args['arg2']
-            c = args['arg3']
-            print(a, b, c, sep='\n\n')
-            return "Jai Siya Ram"
+            args = server_test.parse_args()
+            val = args['arg']
+            print(val)
+            return 'server running', 200
         except Exception as e:
             print('Error in My Route : ', e)
 
 
-@mangons.route('/my_route1')
-class MyRoute1(Resource):
-    # @api.expect(my_route, validate=True)
+
+@mangons.route('talktome/friend')
+class TTM_friend(Resource):
+    @api.expect(ttm_friend, validate=True)
     def post(self):
         try:
-            args = my_route.parse_args()
-            a = args['arg1']
-            b = args['arg2']
-            c = args['arg3']
-            print(a, b, c, sep='\n\n')
-            return "Jai Siya Ram"
+            return 'server running', 200
         except Exception as e:
             print('Error in My Route : ', e)
