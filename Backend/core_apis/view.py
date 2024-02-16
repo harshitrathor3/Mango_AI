@@ -5,7 +5,7 @@ from core_apis.payloads import *
 import json
 
 from AI.ai_model import chat_model
-
+from core_apis.control import QNA
 
 
 api = Api()
@@ -56,3 +56,24 @@ class TTMfriend(Resource):
         except Exception as e:
             print('Error in TTM Friend : ', e)
             return f'Error occured in my TTM friend : {e}', 500
+        
+
+
+@mangons.route('/qna_ai')
+class QueNanS(Resource):
+    # @api.expect(qna_ai, validate=True)
+    def post(self):
+        try:
+            json_data = request.get_json()
+            user_id = json_data['user_id']
+            question = json_data['question']
+            chat_history = json_data['chat_history']
+
+            answer, chat_history = QNA(user_id, question, chat_history)
+
+            data = {"user_id" : user_id, "answer" : answer, "chat_history" : chat_history}
+
+            return data, 200
+        except Exception as e:
+            print('Error in server test : ', e)
+            return f'Error occured in QueNanS{e}', 500
