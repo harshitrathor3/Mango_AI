@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:mango_ai/screens/QNA.dart';
 
 void main() => runApp(MaterialApp(
     builder: (context, child) {
@@ -7,7 +8,7 @@ void main() => runApp(MaterialApp(
     },
     title: 'GNav',
     theme: ThemeData(
-      primaryColor: Colors.grey[800],
+      primaryColor: Colors.yellowAccent,
     ),
     home: Example()));
 
@@ -17,7 +18,7 @@ class Example extends StatefulWidget {
 }
 
 class _ExampleState extends State<Example> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
@@ -29,10 +30,7 @@ class _ExampleState extends State<Example> {
       'Likes',
       style: optionStyle,
     ),
-    Text(
-      'Search',
-      style: optionStyle,
-    ),
+    QNAScreen(),
     Text(
       'Profile',
       style: optionStyle,
@@ -67,24 +65,24 @@ class _ExampleState extends State<Example> {
               rippleColor: Colors.grey[300]!,
               hoverColor: Colors.grey[100]!,
               gap: 8,
-              activeColor: Colors.black,
+              activeColor: Colors.white,
               iconSize: 24,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.grey[100]!,
-              color: Colors.black,
+              tabBackgroundColor: Colors.amber,
+              color: Colors.yellow,
               tabs: [
                 GButton(
-                  icon: Icons.home,
-                  text: 'Home',
+                  icon: Icons.record_voice_over_rounded,
+                  text: 'Talk',
                 ),
                 GButton(
-                  icon: Icons.hub_outlined,
-                  text: 'Likes',
+                  icon: Icons.auto_awesome,
+                  text: 'Auto',
                 ),
                 GButton(
-                  icon: Icons.search,
-                  text: 'Search',
+                  icon: Icons.chat,
+                  text: 'Qna',
                 ),
                 GButton(
                   icon: Icons.person,
