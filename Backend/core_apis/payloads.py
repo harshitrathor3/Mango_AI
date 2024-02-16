@@ -10,10 +10,12 @@ server_test.add_argument('arg', type=str, help='Argument')
 
 
 
+
 # TTM Friend
 ttm_friend = reqparse.RequestParser()
-ttm_friend.add_argument('user_id', type=str, help='User ID', required=True)
-ttm_friend.add_argument('question', type=str, help='Question', required=True)
+ttm_friend.add_argument('user_id', type=int, help='User ID', required=True)
+ttm_friend.add_argument('question', type=str, help='User Question', required=True)
+ttm_friend.add_argument('chat_history', type=list, help='Chat History', required=True, location='json')
 
 
 
