@@ -19,6 +19,12 @@ class Example extends StatefulWidget {
 
 class _ExampleState extends State<Example> {
   int _selectedIndex = 2;
+  List<String> _selectedPage = [
+    "Talk to me as",
+    "Task Automation",
+    "MangoAI",
+    "Profile"
+  ];
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
@@ -43,7 +49,12 @@ class _ExampleState extends State<Example> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 20,
-        title: const Text('GoogleNavBar'),
+        title: Center(
+          child: Text(
+            _selectedPage[_selectedIndex],
+            textAlign: TextAlign.center,
+          ),
+        ),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -82,7 +93,7 @@ class _ExampleState extends State<Example> {
                 ),
                 GButton(
                   icon: Icons.chat,
-                  text: 'Qna',
+                  text: 'Chat',
                 ),
                 GButton(
                   icon: Icons.person,
