@@ -6,7 +6,7 @@ void main() => runApp(MaterialApp(
     builder: (context, child) {
       return Directionality(textDirection: TextDirection.ltr, child: child!);
     },
-    title: 'GNav',
+    title: 'MangoAI',
     theme: ThemeData(
       primaryColor: Colors.yellowAccent,
     ),
@@ -19,6 +19,12 @@ class Example extends StatefulWidget {
 
 class _ExampleState extends State<Example> {
   int _selectedIndex = 2;
+  List<String> _selectedPage = [
+    "Talk to me as",
+    "Task Automation",
+    "MangoAI",
+    "Profile"
+  ];
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
@@ -30,7 +36,7 @@ class _ExampleState extends State<Example> {
       'Likes',
       style: optionStyle,
     ),
-    QNAScreen(),
+    QNAScreen(token: null),
     Text(
       'Profile',
       style: optionStyle,
@@ -43,7 +49,12 @@ class _ExampleState extends State<Example> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 20,
-        title: const Text('GoogleNavBar'),
+        title: Center(
+          child: Text(
+            _selectedPage[_selectedIndex],
+            textAlign: TextAlign.center,
+          ),
+        ),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -71,7 +82,7 @@ class _ExampleState extends State<Example> {
               duration: Duration(milliseconds: 400),
               tabBackgroundColor: Colors.amber,
               color: Colors.yellow,
-              tabs: [
+              tabs: const [
                 GButton(
                   icon: Icons.record_voice_over_rounded,
                   text: 'Talk',
@@ -82,7 +93,7 @@ class _ExampleState extends State<Example> {
                 ),
                 GButton(
                   icon: Icons.chat,
-                  text: 'Qna',
+                  text: 'Chat',
                 ),
                 GButton(
                   icon: Icons.person,
