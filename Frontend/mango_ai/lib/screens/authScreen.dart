@@ -71,13 +71,66 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              signInWIthGoogle();
-            },
-            child: const Text("Sign IN with google")),
-      ),
+      backgroundColor: Color.fromARGB(255, 255, 164, 102),
+      body: Expanded(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+              child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "🥭 Mango AI",
+                      style: TextStyle(
+                          fontSize: 40,
+                          color: const Color.fromARGB(255, 255, 255, 255)),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: SizedBox(
+                      width: 240,
+                      child: Text(
+                        "A new start with your Everyday AI Assistant ",
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Color.fromRGBO(135, 34, 34, 1)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: SizedBox(),
+            ),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    //  foregroundColor: ,
+                    backgroundColor: Color.fromARGB(255, 167, 62, 1),
+                    elevation: 30,
+                    alignment: Alignment.center),
+                onPressed: signInWIthGoogle,
+                child: Text(
+                  "Continue with Google",
+                  style: TextStyle(
+                      fontSize: 20, color: Color.fromARGB(255, 251, 251, 251)),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 100,
+            )
+          ],
+        ),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 

@@ -2,6 +2,88 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import '../models/messege.dart';
 import '../apis.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+Future<String> qna(String content) async {
+  String endpoint = "https://mangocloud-2b2gpae35q-uc.a.run.app/mango/qna";
+  try {
+    print("This code is running 1");
+    final url = Uri.parse(endpoint);
+    Map<String, dynamic> mp = {
+      "user_id": "12345",
+      "question": content,
+      "chat_history": []
+    };
+    final respose = await http.post(url,
+        headers: {'Content-Type': 'application/json'}, body: jsonEncode(mp));
+    print("Result is found");
+    var body = jsonDecode(respose.body);
+    print(body["answer"]);
+    return body["answer"];
+  } catch (err) {
+    print(err);
+    return "";
+  }
+}
+
+Future<String> ttm_friend(String content) async {
+  String endpoint =
+      "https://mangocloud-2b2gpae35q-uc.a.run.app/mango/talktome/friend";
+  try {
+    print("This code is running 1");
+    final url = Uri.parse(endpoint);
+    Map<String, dynamic> mp = {
+      "user_id": "12345",
+      "question": content,
+      "chat_history": [],
+      "name": "Mann",
+      "age": 20
+    };
+    final respose = await http.post(url,
+        headers: {'Content-Type': 'application/json'}, body: jsonEncode(mp));
+    print("Result is found");
+    var body = jsonDecode(respose.body);
+    print(body);
+    print(body["answer"]);
+    return body["answer"];
+  } catch (err) {
+    print(err);
+    return "Oops!! Got an Error....";
+  }
+}
+
+Future<String> ttm_teacher(String content) async {
+  String endpoint =
+      "https://mangocloud-2b2gpae35q-uc.a.run.app/mango/talktome/teacher";
+  try {
+    print("This code is running 1");
+    final url = Uri.parse(endpoint);
+    Map<String, dynamic> mp = {
+      "user_id": "12345",
+      "question": content,
+      "chat_history": [],
+      "name": "Mann",
+      "age": 20,
+      "gender": "Male"
+    };
+    final respose = await http.post(url,
+        headers: {'Content-Type': 'application/json'}, body: jsonEncode(mp));
+    print("Result is found");
+    var body = jsonDecode(respose.body);
+    print(body["answer"]);
+    return body["answer"];
+  } catch (err) {
+    print(err);
+    return "";
+  }
+}
+
+List<String> Suggestions = [
+  "What's Weather Today?",
+  "India vs Pakistan Score",
+  "What is megalodon"
+];
 
 class QNAScreen extends StatefulWidget {
   final String? token;
@@ -50,7 +132,14 @@ class _QNAScreenState extends State<QNAScreen> {
     if (_speechToText.isListening == false) {
       chatlist.add(Messege(content: _wordsSpoken, isAi: false));
       // final answer=await
-      final String answer = await qna(_wordsSpoken);
+      String answer = "";
+      if (widget.token == null) {
+        answer = await qna(_wordsSpoken);
+      } else if (widget.token == "friend") {
+        answer = await ttm_friend(_wordsSpoken);
+      } else if (widget.token == "teacher") {
+        answer = await ttm_teacher(_wordsSpoken);
+      }
       chatlist.add(Messege(content: answer, isAi: true));
       _wordsSpoken = "";
     }
@@ -127,8 +216,8 @@ class _QNAScreenState extends State<QNAScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: (chatlist[index].isAi
-                          ? Colors.grey.shade200
-                          : Colors.blue[200]),
+                          ? Color.fromARGB(255, 255, 177, 123)
+                          : Colors.amber[50]),
                     ),
                     padding: EdgeInsets.all(16),
                     child: Text(
@@ -145,21 +234,29 @@ class _QNAScreenState extends State<QNAScreen> {
             ? Container(
                 height: 40,
                 width: size.width,
-                child: ListView(scrollDirection: Axis.horizontal, children: [
-                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
-                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
-                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
-                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
-                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
-                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
-                  ElevatedButton(onPressed: () {}, child: Text("Suggestion")),
-                ]),
-              )
-            : _speechToText.isListening
-                ? Text(_wordsSpoken)
-                : const SizedBox(
-                    height: 0,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text(Suggestions[index]),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 255, 177, 123),
+                          foregroundColor: Colors.white),
+                    ),
                   ),
+                  itemCount: Suggestions.length,
+                ),
+              )
+            : const SizedBox(
+                height: 0,
+              ),
+        _speechToText.isListening
+            ? Text(_wordsSpoken)
+            : const SizedBox(
+                height: 0,
+              ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Center(
@@ -169,8 +266,10 @@ class _QNAScreenState extends State<QNAScreen> {
               // tooltip: 'Listen',
               child: Icon(
                 _speechToText.isNotListening ? Icons.mic_off : Icons.mic,
-                color: Colors.amber,
               ),
+              style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color.fromARGB(255, 255, 164, 102)),
               // backgroundColor: Colors.red,
             ),
           ),

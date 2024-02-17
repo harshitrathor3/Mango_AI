@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:mango_ai/screens/TalkToMeAs.dart';
 import 'package:mango_ai/screens/profile.dart';
 import '../screens/QNA.dart';
 
@@ -19,12 +20,9 @@ class _TabScreenState extends State<TabScreen> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
+    TalkToMeSection(),
     Text(
-      'Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Likes',
+      'Task Automation',
       style: optionStyle,
     ),
     QNAScreen(token: null),
@@ -34,9 +32,11 @@ class _TabScreenState extends State<TabScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromARGB(255, 255, 220, 180),
       appBar: AppBar(
         elevation: 20,
+        backgroundColor: Colors.black,
+        foregroundColor: Color.fromARGB(255, 255, 164, 102),
         title: Center(
           child: Text(
             _selectedPage[_selectedIndex],
@@ -49,7 +49,7 @@ class _TabScreenState extends State<TabScreen> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.black,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -68,8 +68,8 @@ class _TabScreenState extends State<TabScreen> {
               iconSize: 24,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.amber,
-              color: Colors.yellow,
+              tabBackgroundColor: Color.fromARGB(255, 255, 164, 102),
+              color: Color.fromARGB(255, 255, 164, 102),
               tabs: const [
                 GButton(
                   icon: Icons.record_voice_over_rounded,
