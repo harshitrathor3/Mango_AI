@@ -98,6 +98,7 @@ The generated emails should be contextually relevant and adhere to the intended 
 You have to provide the user with three different email variations to choose from.
 The output should be a Python dictionary with the following structure only nothing else is required:
 {{
+    "subject": "subject of mail",
     "mails": ["mail 1", "mail 2", "mail 3"]
 }}
 
@@ -119,6 +120,7 @@ Example:
 Subject Line: Invitation to Business Meeting
 JSON Output:
 {{
+    "subject": "subject of mail",
     "mails": [
         "Formal and professional email draft",
         "Casual and friendly email draft",
@@ -127,7 +129,6 @@ JSON Output:
 }}
 
 Make sure you give just the raw json as text only. No need to give ```python``` things, or any other fancy things. I just want to load this JSON output with json.loads(). Please make sure this works.
-
 '''
     output_json, hist = chat_model(prompt, [])
     print('outptut json', output_json)
