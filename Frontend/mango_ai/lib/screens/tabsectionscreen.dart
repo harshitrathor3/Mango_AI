@@ -22,7 +22,7 @@ class _TabScreenState extends State<TabScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     TalkToMeSection(),
     Text(
-      'Likes',
+      'Task Automation',
       style: optionStyle,
     ),
     QNAScreen(token: null),

@@ -249,11 +249,14 @@ class _QNAScreenState extends State<QNAScreen> {
                   itemCount: Suggestions.length,
                 ),
               )
-            : _speechToText.isListening
-                ? Text(_wordsSpoken)
-                : const SizedBox(
-                    height: 0,
-                  ),
+            : const SizedBox(
+                height: 0,
+              ),
+        _speechToText.isListening
+            ? Text(_wordsSpoken)
+            : const SizedBox(
+                height: 0,
+              ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Center(
