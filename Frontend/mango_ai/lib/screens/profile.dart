@@ -14,6 +14,10 @@ class ProfileSection extends StatelessWidget {
             await GoogleSignIn().signOut();
             FirebaseAuth.instance.signOut();
           },
+          style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Color.fromARGB(255, 255, 164, 102),
+              fixedSize: Size(200, 50)),
           child: Text("LogOut")),
     );
   }
