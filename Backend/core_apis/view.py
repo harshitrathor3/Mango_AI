@@ -4,7 +4,7 @@ from core_apis.payloads import *
 
 import json
 
-from core_apis.control import QNA, ttm_friend
+from core_apis.control import QNA, ttm_friend, gmail_autowriting
 
 
 
@@ -35,7 +35,7 @@ class ServerTest(Resource):
             return 'server running', 200
         except Exception as e:
             print('Error in server test : ', e)
-            return f'Error occured in my route{e}', 500
+            return f'Error occured in my route : {e}', 500
 
 
 @mangons.route('/talktome/friend')
@@ -77,5 +77,28 @@ class QueNanS(Resource):
 
             return data, 200
         except Exception as e:
-            print('Error in server test : ', e)
-            return f'Error occured in QueNanS{e}', 500
+            print('Error in QNA : ', e)
+            return f'Error occured in QueNanS : {e}', 500
+        
+
+@mangons.route('/gmail/autowriting')
+class GmailAutoWriting(Resource):
+    # @api.expect(qna_ai, validate=True)
+    def post(self):
+        try:
+            json_data = request.get_json()
+            user_id = json_data['user_id']
+            mail_subject = json_data['mail_subject']
+            gmail_token = json_data['gmail_token']
+
+            # print(json_data)
+            mails = gmail_autowriting(mail_subject)
+            # print(mails)
+            # mails = eval(mails)
+            # print(mails)
+            # print(type(mails))
+            
+            return mails
+        except Exception as e:
+            print('Error in Gmail autowriting', e)
+            return f'Error in gmail autowriting : {e}'
