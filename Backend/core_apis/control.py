@@ -77,3 +77,34 @@ Make sure you talk to the user with respect to his age. Please not that user sho
         response, history = chat_model(question, chat_history)
 
     return response, history
+
+
+def gmail_summary(data):
+    # print(data)
+    prompt = f'''
+    Given an email message: {data}
+    Important Note**: Provide all these in a JSON formate. Providing Sample JSON formate:
+    {{"Summary":"SummaryGenerated_ ",
+    "Tags": ["   ", "   ", "  "],
+    "SuggestedTags": [],
+    "Responses":["Response1"],["Response2 "],["Response3 "]}}
+
+
+
+    Summarize: Briefly describe the main points of the email in 2-3 lines, highlighting key information and actions.
+    Categorize: Identify relevant tags (categories) describing the email's content. Consider both user-defined tags and new suggestions based on the email's content.
+    Respond: Generate 3 natural language response to the email, taking into account:
+    The content of the email, particularly the summary and identified tags.
+    The sender and any previous interactions or relevant context.
+    The overall goal of the email conversation (e.g., provide information, answer a question, resolve an issue).
+    Learn: If a history of interactions with the sender is available, use it to improve future responses by:
+    Identifying recurring topics or issues.
+    Adapting the response tone and style to the sender's preferences.
+    Learning from successful or unsuccessful responses in the past.
+    '''
+    # if :
+    json_response, json_chat_history = chat_model(prompt, [])
+    # else:
+        
+
+    return json_response

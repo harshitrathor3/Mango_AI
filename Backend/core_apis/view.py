@@ -4,7 +4,7 @@ from core_apis.payloads import *
 
 import json
 
-from core_apis.control import QNA, ttm_friend
+from core_apis.control import QNA, ttm_friend, gmail_summary
 
 
 
@@ -79,3 +79,21 @@ class QueNanS(Resource):
         except Exception as e:
             print('Error in server test : ', e)
             return f'Error occured in QueNanS{e}', 500
+        
+
+
+@mangons.route('/gmail/summary')
+class GmailSummary(Resource):
+    # @api.expect(gmail_summary, validate=True)
+    def post(self):
+        try:
+            json_data = request.get_json()
+            response_json = gmail_summary(json_data)
+            data = json.loads(response_json)
+            # print(data)
+            return data, 200
+            # return response_json, 200
+        except Exception as e:
+            print('Error in GmailSummary : ', e)
+            return f'Error occured in GmailSummary{e}', 500
+
