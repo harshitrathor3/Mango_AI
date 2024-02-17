@@ -12,7 +12,12 @@
           "package_name": "com.example.mango_ai"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "239787574751-gg79nsaqdhifhlrglv8g7k0cl91quuoc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA2Bf8zZxulyN45zjCvIhVRhBmg5yW0sFg"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239787574751-gg79nsaqdhifhlrglv8g7k0cl91quuoc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "239787574751-b9ugcsnqklj8qclaqohcepl811lbgp78.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mangoAi.RunnerTests"
+              }
+            }
+          ]
         }
       }
     }
