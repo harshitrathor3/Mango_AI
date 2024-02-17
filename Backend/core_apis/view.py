@@ -4,7 +4,9 @@ from core_apis.payloads import *
 
 import json
 
-from core_apis.control import QNA, ttm_friend, gmail_autowriting
+
+from core_apis.control import QNA, ttm_friend, gmail_summary, ttm_teacher, gmail_autowriting
+
 
 
 
@@ -60,6 +62,29 @@ class TTMfriend(Resource):
             return f'Error occured in my TTM friend : {e}', 500
         
 
+@mangons.route('/talktome/teacher')
+class TTMteacher(Resource):
+    # @api.expect(ttm_teacher, validate=True)
+    def post(self):
+        try:
+            json_data = request.get_json()
+            
+            user_id = json_data['user_id']
+            question = json_data['question']
+            chat_history = json_data['chat_history']
+            name = json_data['name']
+            age = json_data['age']
+            gender = json_data['gender']
+            
+            answer, chat_history = ttm_teacher(user_id, question, chat_history, name, age, gender)
+
+            data = {'answer': answer, 'chat_history': chat_history, 'user_id': user_id}
+
+            return data, 200
+        except Exception as e:
+            print('Error in TTM Teacher : ', e)
+            return f'Error occured in my TTM Teacher : {e}', 500
+
 
 @mangons.route('/qna')
 class QueNanS(Resource):
@@ -102,3 +127,21 @@ class GmailAutoWriting(Resource):
         except Exception as e:
             print('Error in Gmail autowriting', e)
             return f'Error in gmail autowriting : {e}'
+        
+
+
+@mangons.route('/gmail/summary')
+class GmailSummary(Resource):
+    # @api.expect(gmail_summary, validate=True)
+    def post(self):
+        try:
+            json_data = request.get_json()
+            response_json = gmail_summary(json_data)
+            data = json.loads(response_json)
+            # print(data)
+            return data, 200
+            # return response_json, 200
+        except Exception as e:
+            print('Error in GmailSummary : ', e)
+            return f'Error occured in GmailSummary{e}', 500
+
