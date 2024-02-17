@@ -1,5 +1,6 @@
 from AI.ai_model import chat_model
 
+import json
 
 def QNA(user_id, question, chat_history):
     prompt = f'''
@@ -80,6 +81,59 @@ Make sure you talk to the user with respect to his age. Please not that user sho
 
 
 
+def gmail_autowriting(mail_subject):
+    prompt = f'''Objective: Develop three distinct email drafts based on this subject line '{mail_subject}', and outputs the drafts as a Python dictionary.
+
+Requirements:
+
+Please accurately determine the purpose of the email from the above mentioned subject line.
+The generated emails should be contextually relevant and adhere to the intended purpose of this subject line.
+You have to provide the user with three different email variations to choose from.
+The output should be a Python dictionary with the following structure only nothing else is required:
+{{
+    "mails": ["mail 1", "mail 2", "mail 3"]
+}}
+
+Technical Specifications:
+
+Input: Mail Subject : {mail_subject}
+Output: JSON with three email drafts in different styles:
+Formal and professional
+Casual and friendly
+Creative and unique
+Process:
+
+Analyze this subject line to identify the purpose of the email.
+Generate an email draft that matches the identified purpose.
+Repeat Steps 1 and 2 to generate two additional email drafts with distinct styles.
+Convert the three email drafts into a JSON with the specified structure.
+Example:
+
+Subject Line: Invitation to Business Meeting
+JSON Output:
+{{
+    "mails": [
+        "Formal and professional email draft",
+        "Casual and friendly email draft",
+        "Creative and unique email draft"
+    ]
+}}
+
+Make sure you give just the raw json as text only. No need to give ```python``` things, or any other fancy things. I just want to load this JSON output with json.loads(). Please make sure this works.
+
+'''
+    output_json, hist = chat_model(prompt, [])
+    print('outptut json', output_json)
+    print(type(output_json))
+    
+    # output = output_json.replace("```python", "").replace("```", "").replace("\n", "").replace("mails = ", "")
+    # print(output)
+    # mails_dict = json.loads(output)
+    return output_json
+    # return 'ans'
+
+    
+    
 def ttm_teacher(user_id, question, chat_history, name, age, gender):
     prompt = f'''Prompts for AI Chat Model Acting as a Teacher/Mentor/Professor
 
@@ -177,3 +231,4 @@ def gmail_summary(data):
         
 
     return json_response
+
