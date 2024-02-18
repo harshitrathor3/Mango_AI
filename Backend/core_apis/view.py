@@ -137,9 +137,9 @@ class GmailSummary(Resource):
         try:
             json_data = request.get_json()
             response_json = gmail_summary(json_data)
-            data = json.loads(response_json)
+            # data = json.loads(response_json)
             # print(data)
-            return data, 200
+            return response_json, 200
             # return response_json, 200
         except Exception as e:
             print('Error in GmailSummary : ', e)
