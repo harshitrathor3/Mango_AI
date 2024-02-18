@@ -122,8 +122,11 @@ class GmailAutoWriting(Resource):
             # mails = eval(mails)
             # print(mails)
             # print(type(mails))
+
+            ans = {'ans': mails}
+
             
-            return mails
+            return json.dumps(ans)
         except Exception as e:
             print('Error in Gmail autowriting', e)
             return f'Error in gmail autowriting : {e}'
