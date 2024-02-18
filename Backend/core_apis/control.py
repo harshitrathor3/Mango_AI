@@ -86,9 +86,42 @@ User chat : {question}
 
     return response, history
 
-
-
 def gmail_autowriting(mail_subject):
+    prompt = f'''Objective: Develop email drafts based on this subject line '{mail_subject}', and outputs the drafts as a string.
+
+Requirements:
+
+Please accurately determine the purpose of the email from the above mentioned subject line.
+The generated emails should be contextually relevant and adhere to the intended purpose of this subject line.
+You have to provide the user with three different email variations to choose from.
+The output should be a string only nothing else is required:
+
+Technical Specifications:
+
+Input: Mail Subject : {mail_subject}
+Output: string with one of the below mentioned tone related to our mail subject:
+Formal and professional
+Casual and friendly
+Creative and unique
+Process:
+
+Analyze this subject line to identify the purpose of the email.
+Generate an email draft that matches the identified purpose.
+
+
+Make sure you give just the mail in string. No need to give Response:, etc or any other fancy things.
+'''
+    ans, hist = chat_model(prompt, [])
+    # print('outptut json', output_json)
+    # print(type(output_json))
+    
+    # # output = output_json.replace("```python", "").replace("```", "").replace("\n", "").replace("mails = ", "")
+    # # print(output)
+    # mails_dict = json.loads(output_json)
+    # return mails_dict
+    return ans
+
+def gmail_autowriting1(mail_subject):
     prompt = f'''Objective: Develop three distinct email drafts based on this subject line '{mail_subject}', and outputs the drafts as a Python dictionary.
 
 Requirements:
@@ -136,8 +169,8 @@ Make sure you give just the raw json as text only. No need to give ```python``` 
     
     # output = output_json.replace("```python", "").replace("```", "").replace("\n", "").replace("mails = ", "")
     # print(output)
-    # mails_dict = json.loads(output)
-    return output_json
+    mails_dict = json.loads(output_json)
+    return mails_dict
     # return 'ans'
 
     
