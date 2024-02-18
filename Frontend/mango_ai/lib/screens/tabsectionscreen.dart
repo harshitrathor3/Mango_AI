@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:mango_ai/screens/TalkToMeAs.dart';
 import 'package:mango_ai/screens/profile.dart';
+import 'package:mango_ai/screens/taskAutomation.dart';
 import '../screens/QNA.dart';
 
 class TabScreen extends StatefulWidget {
@@ -21,10 +22,7 @@ class _TabScreenState extends State<TabScreen> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
     TalkToMeSection(),
-    Text(
-      'Task Automation',
-      style: optionStyle,
-    ),
+    TaskAutomationSection(),
     QNAScreen(token: null),
     ProfileSection()
   ];

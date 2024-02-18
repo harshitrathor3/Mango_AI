@@ -60,10 +60,14 @@
 //     }
 //   }
 // }
-
-import 'package:flutter/material.dart';
+import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:googleapis/gmail/v1.dart';
+import 'package:googleapis/people/v1.dart';
+import 'package:googleapis_auth/googleapis_auth.dart' as auth;
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -135,7 +139,18 @@ class LoginScreen extends StatelessWidget {
   }
 
   signInWIthGoogle() async {
-    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    GoogleSignInAccount? googleUser = await GoogleSignIn(
+      scopes: <String>[
+        PeopleServiceApi.contactsReadonlyScope,
+        'https://mail.google.com/',
+        'https://www.googleapis.com/auth/gmail.modify',
+        'https://www.googleapis.com/auth/gmail.readonly',
+        // 'https://www.googleapis.com/auth/gmail.metadata',
+        GmailApi.gmailComposeScope,
+        GmailApi.gmailSendScope,
+        GmailApi.gmailReadonlyScope,
+      ],
+    ).signIn();
     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
     AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
