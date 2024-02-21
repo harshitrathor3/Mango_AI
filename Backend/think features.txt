@@ -17,3 +17,9 @@ ek alag section me apn esa krenge ki ----- (start me QNA me nhi krenge, baad me 
 
 Motive - 
     App apni sari chize smjh k khud se decision leke apni sari chize automatically kr dega (just confirmation required form user before final submit)
+
+
+
+
+New Idea for auto prompt generation - 
+        We can tell AI to auto generate prompts and than we will evaluate that prompt with QNA. If all answer satisfied then prompt returned as output othrwise this thing go in iterative manner and iteratively pormpt generation and test with QNA should happen.
