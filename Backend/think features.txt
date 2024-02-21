@@ -5,6 +5,7 @@ TODO:
     2. History store in DB
     3. TTM option
     4. khud se prompt generate krne vale ka experiment
+    5. DB for user infomation storage
 
 
 When I give something to AI like I have plant of tulsi than it should start tell me when to water it and how to take care of it.
