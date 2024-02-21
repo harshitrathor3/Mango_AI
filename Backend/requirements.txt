@@ -1,3 +1,5 @@
 Flask
 flask-restx
 Flask-Cors
+google-generativeai
+vertexai
