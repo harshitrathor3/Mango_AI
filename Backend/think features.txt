@@ -1,7 +1,7 @@
 Features goes here....
 
 TODO: 
-    1. Embedding - rachit working
+    1. Embedding 
     2. History store in DB
     3. TTM option
     4. khud se prompt generate krne vale ka experiment
