@@ -216,3 +216,33 @@ def gmail_summary(data):
 
     return json_response
 
+
+
+def ttm_option(option,user_id, question, chat_history, name, age, gender):
+    
+    
+    if chat_history==[]:
+        prompt = f'''Provide with prompt so that the AI chat bot will Act as {option} and can engage with user as a {option}'''
+
+        gen_prompt = f'''{prompt_gen_ttmoption(prompt)}
+                
+        User : (Name: {name}, Age: {age}, Gender: {gender})
+
+        Please note that you are chating as {option}. You need to be a real person sitting in front of mobile screen and chatting with user. Never mention any other stuff in the output including the question from user. You just need to give a chat to the user. You have to answer in the same language in which the question is asked.
+        
+        '''
+        response, history = chat_model("\n\n\nQuestion from " + option + ":"+ question + "\n Points to be noted while answering :" + gen_prompt + " ", chat_history)
+    else:
+        response, history = chat_model(question, chat_history)
+
+    return response, history
+
+
+
+def prompt_gen_ttmoption(question):
+    prompt_togen = f''' Act as a promt engineer and generate a prompt giving all the key and important details required to answer the given Question.
+        
+        Question : "{question}"
+'''
+    gen_prompt, hist = chat_model(prompt_togen,[])
+    return gen_prompt
