@@ -1,1 +1,19 @@
 Features goes here....
+
+TODO: 
+    1. Embedding
+    2. History store in DB
+    3. TTM option
+    4. khud se prompt generate krne vale ka experiment
+
+
+When I give something to AI like I have plant of tulsi than it should start tell me when to water it and how to take care of it.
+          user should be able to turn on and off the feature if he no longer wants to get updates about this thing.
+
+ek alag section me apn esa krenge ki ----- (start me QNA me nhi krenge, baad me QNA me kr skte h)
+    jese jese apn log baat krte rahe - vese vese AI information store krte rehna chahiye or uss ke sections ban na chahiye ek specific screeen pe
+    uss se AI automatically notification, remainders, alarms set kr skta h if user want to and if user allow in our app
+
+
+Motive - 
+    App apni sari chize smjh k khud se decision leke apni sari chize automatically kr dega (just confirmation required form user before final submit)
