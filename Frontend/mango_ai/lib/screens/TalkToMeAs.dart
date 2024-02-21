@@ -12,7 +12,7 @@ class TalkToMeSection extends StatefulWidget {
 class _TalkToMeSectionState extends State<TalkToMeSection> {
   bool _isPersonSelected = false;
   int _selectedPerson = 0;
-  List<String> _persons = ["friend", "teacher"];
+  final List<String> _persons = ["friend", "teacher"];
   @override
   Widget build(BuildContext context) {
     if (_isPersonSelected) {

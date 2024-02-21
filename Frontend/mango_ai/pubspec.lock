@@ -81,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  extension_google_sign_in_as_googleapis_auth:
+    dependency: "direct main"
+    description:
+      name: extension_google_sign_in_as_googleapis_auth
+      sha256: bcf4f8dedcc1e66ce5fe98fbd98cc86ed25ad7fce0511e8d6cdc46ccbf421e8e
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.12"
   fake_async:
     dependency: transitive
     description:
@@ -142,6 +150,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_animated_loadingkit:
+    dependency: "direct main"
+    description:
+      name: flutter_animated_loadingkit
+      sha256: f0cd7157928c23433ec785b42cbbfef40c31ac57f484b121805e0a6b5da716e7
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -168,6 +184,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.7.0"
+  google:
+    dependency: "direct main"
+    description:
+      name: google
+      sha256: "28452f1d6b6e746dfc2ba93b1f7a210c3e0df5187b6012147d92d6dfc6f76440"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   google_auth:
     dependency: "direct main"
     description:

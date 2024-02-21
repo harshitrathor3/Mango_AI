@@ -60,10 +60,14 @@
 //     }
 //   }
 // }
-
-import 'package:flutter/material.dart';
+import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:googleapis/gmail/v1.dart';
+import 'package:googleapis/people/v1.dart';
+import 'package:googleapis_auth/googleapis_auth.dart' as auth;
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -71,14 +75,14 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 164, 102),
+      backgroundColor: const Color.fromARGB(255, 255, 164, 102),
       body: Expanded(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 200,
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 30),
               child: Column(
                 //crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                       "🥭 Mango AI",
                       style: TextStyle(
                           fontSize: 40,
-                          color: const Color.fromARGB(255, 255, 255, 255)),
+                          color: Color.fromARGB(255, 255, 255, 255)),
                     ),
                   ),
                   Align(
@@ -107,25 +111,25 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(
+            const Expanded(
               child: SizedBox(),
             ),
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     //  foregroundColor: ,
-                    backgroundColor: Color.fromARGB(255, 167, 62, 1),
+                    backgroundColor: const Color.fromARGB(255, 167, 62, 1),
                     elevation: 30,
                     alignment: Alignment.center),
                 onPressed: signInWIthGoogle,
-                child: Text(
+                child: const Text(
                   "Continue with Google",
                   style: TextStyle(
                       fontSize: 20, color: Color.fromARGB(255, 251, 251, 251)),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 100,
             )
           ],
@@ -135,7 +139,18 @@ class LoginScreen extends StatelessWidget {
   }
 
   signInWIthGoogle() async {
-    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    GoogleSignInAccount? googleUser = await GoogleSignIn(
+      scopes: <String>[
+        PeopleServiceApi.contactsReadonlyScope,
+        'https://mail.google.com/',
+        'https://www.googleapis.com/auth/gmail.modify',
+        'https://www.googleapis.com/auth/gmail.readonly',
+        // 'https://www.googleapis.com/auth/gmail.metadata',
+        GmailApi.gmailComposeScope,
+        GmailApi.gmailSendScope,
+        GmailApi.gmailReadonlyScope,
+      ],
+    ).signIn();
     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
     AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);

@@ -9,14 +9,14 @@ class UserSelectionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(50),
         child: Card(
           child: Container(
-            color: Color.fromARGB(255, 255, 177, 123),
+            color: const Color.fromARGB(255, 255, 177, 123),
             child: Center(
               child: Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 30,
                   color: Colors.black,
                 ),
