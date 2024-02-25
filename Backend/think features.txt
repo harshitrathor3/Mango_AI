@@ -22,5 +22,8 @@ Motive -
 
 
 
+
+
+
 New Idea for auto prompt generation - 
         We can tell AI to auto generate prompts and than we will evaluate that prompt with QNA. If all answer satisfied then prompt returned as output othrwise this thing go in iterative manner and iteratively pormpt generation and test with QNA should happen.
