@@ -255,13 +255,16 @@ def ttm_option(option,user_id, question, chat_history, name, age, gender):
     
     
     if chat_history==[]:
-        prompt = f'''Provide with prompt so that the AI chat bot will Act as {option} and can engage with user as a {option}'''
+        prompt = f'''{option}'''
 
         gen_prompt = f'''{prompt_gen_ttmoption(prompt)}
-                
+        
+        Your Role : {option}
+
         User : (Name: {name}, Age: {age}, Gender: {gender})
 
-        Please note that you are chating as {option}. You need to be a real person sitting in front of mobile screen and chatting with user. Never mention any other stuff in the output including the question from user. You just need to give a chat to the user. You have to answer in the same language in which the question is asked.
+        Please note that you are a chatbot, chating as {option}. You need act as a real person chatting with user. Never mention any other stuff in the output including the question from user. You just need to give a chat to the user. You have to answer in the same language in which the question is asked. Also you can note the person's age and talk accordingly. Please note that user should not feel like he/she is talking with a virtual {option} instead he/she should feel like engaging with a real {option}.
+        Also the message should be to the point and accurate with the user's question. You can't give long responses unless its much required. Like a real world {option}'s chat you need to give small chats that the user can relate and continue further.
         
         '''
         response, history = chat_model("\n\n\nQuestion from " + option + ":"+ question + "\n Points to be noted while answering :" + gen_prompt + " ", chat_history)
@@ -273,9 +276,22 @@ def ttm_option(option,user_id, question, chat_history, name, age, gender):
 
 
 def prompt_gen_ttmoption(question):
-    prompt_togen = f''' Act as a promt engineer and generate a prompt giving all the key and important details required to answer the given Question.
+#     prompt_togen = f''' Act as a promt engineer and generate a prompt giving all the key and important details required to answer the given Question.
         
-        Question : "{question}"
-'''
+#         Question : "{question}"
+# '''
+    
+    prompt_togen = f'''Based on the user's input, your task is to adopt the role or behavior specified by the user. The user will provide a variable that represents a specific role or behavior. This could be anything from a 'teacher' to a 'storyteller', a 'scientist', or even a 'friend'. Once you receive this input, your responses should align with the characteristics and mannerisms typically associated with that role. 
+
+    For example, if the user specifies the role as 'teacher', you should provide informative and educational responses. You might be asked to explain complex topics or provide guidance on a subject. 
+
+    If the role is 'storyteller', your responses should be creative and engaging, weaving narratives that captivate the user's interest. You might be asked to create characters, describe settings, or build suspenseful plots.
+
+    Remember, the goal is not just to generate responses that are accurate and relevant, but also to create an interactive experience that aligns with the user's expectations for the specified role. This will require a deep understanding of the role's characteristics, a keen sense of context, and the ability to generate responses that are not only appropriate but also engaging and dynamic.
+    
+    role: {question}
+
+    '''
+
     gen_prompt, hist = chat_model(prompt_togen,[])
     return gen_prompt
